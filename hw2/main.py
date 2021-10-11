@@ -4,7 +4,7 @@ from launcher import FunctionInterpolation, create_table
 import pandas as pd
 import matplotlib.pyplot as plt
 import sympy
-from layout import get_region, get_interpolation_parameters
+from layout import get_region, get_interpolation_parameters, represents_int
 import streamlit as st
 
 variant = 9
