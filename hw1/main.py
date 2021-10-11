@@ -1,5 +1,6 @@
 from sympy import parse_expr, lambdify, diff
 from clarification_methods.get_method import get_clarification_method
+from segmentation import detekt_root_segments
 
 A = -15
 B = -10
@@ -16,23 +17,6 @@ F = lambdify('x', sym_F)
 dF = lambdify('x', sym_dF)
 
 
-def detekt_root_segments(show_segments: bool = True) -> list:
-    h = (B - A) / N
-    position = A
-    previous_calculation = F(A)
-    root_segments = []
-    while position < B:
-        position += h
-        new_calculation = F(position)
-        if previous_calculation * new_calculation <= 0:
-            segment = [position - h, position]
-            root_segments.append(segment)
-            if show_segments:
-                print(f'Found segment: {segment}')
-        previous_calculation = new_calculation
-    return root_segments
-
-
 def greeting():
     print(f"Решение нелинейного уравнения с помощью отделения корней и уточнения.\n"
           f"Параметры: A = {A}, B = {B}, N = {N}, эпсилон = {e}\n"
@@ -42,7 +26,7 @@ def greeting():
 def main():
     greeting()
     print("\nStarting root segmentation")
-    segments = detekt_root_segments()
+    segments = detekt_root_segments(A, B, F, N)
     print()
     for segment in segments:
         print(f"-------- Clarifying segment {segment} ---------")
@@ -63,4 +47,5 @@ def main():
                   f'Last clarification: {clarification_method.get_clarification()}\n')
 
 
-main()
+if __name__ == "__main__":
+    main()
