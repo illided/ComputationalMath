@@ -1,6 +1,6 @@
 from abc import ABC
 
-from clarification_methods.clarification_methods import ClarificationMethod
+from .clarification_methods import ClarificationMethod
 
 
 class BisectionMethod(ClarificationMethod, ABC):

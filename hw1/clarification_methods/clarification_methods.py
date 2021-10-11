@@ -1,4 +1,4 @@
-from typing import Any, Callable
+from typing import Any, Callable, Optional
 
 from sympy import lambdify
 
@@ -17,12 +17,17 @@ class ClarificationMethod:
     segment: list
     finished: bool
 
-    def __init__(self, sym_expr, y: float = 0, max_iteration: int = 10,
+    def __init__(self, sym_expr, expr: Optional[Callable] = None, y: float = 0, max_iteration: int = 10,
                  variable: str = 'x', e: float = 10 ** (-6),
                  print_iterations: bool = True):
         self.sym_expr = sym_expr
         self.target = y
-        self.expr = lambdify(variable, sym_expr)
+
+        if expr is not None:
+            self.expr = expr
+        else:
+            self.expr = lambdify(variable, sym_expr)
+
         self.max_iteration = max_iteration
         self.variable = variable
         self.e = e
