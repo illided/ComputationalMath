@@ -1,9 +1,8 @@
+import numpy as np
 from numpy import ndarray
-from typing import Callable
 from hw2.launcher import FunctionInterpolation
 from hw1.clarification_methods.bisection_method import BisectionMethod
 from hw1.segmentation import detekt_root_segments
-
 
 class SimpleReverseInterpolation(FunctionInterpolation):
     def __init__(self, X, Y):
@@ -18,15 +17,19 @@ class RootSearchReverseInterpolation:
     _Y: 'ndarray'
 
     def __init__(self, X, Y):
-        self._Y = Y
-        self._X = X
+        print("Hello")
+        self._Y = np.array(Y)
+        self._X = np.array(X)
 
-    def interpolate(self, y, poly_method: str = 'newton') -> list:
-        interpolator = FunctionInterpolation(self._X, self._Y)
-        poly = interpolator.interpolate(self._X[0], self._X.shape[0], method=poly_method)
-        segments = detekt_root_segments(self._X[0], self._X[-1], lambda x: poly(x) - y, 1000, show_segments=True)
+    def interpolate(self, y, n, poly_method: str = 'newton') -> list:
+        best_points_indexes = np.argsort(np.abs(self._Y - y))[:n+1]
+        X = self._X[best_points_indexes]
+        Y = self._Y[best_points_indexes]
+        interpolator = FunctionInterpolation(X, Y)
+        poly = interpolator.interpolate(X[0], n, method=poly_method)
+        segments = detekt_root_segments(np.amin(X), np.amax(X), lambda x: poly(x) - y, 1000, show_segments=False)
         roots = []
         for segment in segments:
-            cl_method = BisectionMethod(expr=poly, y=y, print_iterations=True, sym_expr=None)
+            cl_method = BisectionMethod(expr=poly, y=y, print_iterations=False, sym_expr=None)
             roots.append(cl_method.compute(segment))
         return roots

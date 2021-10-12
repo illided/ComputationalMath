@@ -1,7 +1,6 @@
 import numpy as np
 from numpy import ndarray
 import sympy
-from typing import Any, Callable, Optional, Tuple
 from .newton_poly import newton_poly
 from .lagrange_poly import lagrange_poly
 

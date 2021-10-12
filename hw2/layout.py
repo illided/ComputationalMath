@@ -1,5 +1,6 @@
 import streamlit as st
 
+
 def represents_int(s):
     try:
         int(s)
@@ -64,3 +65,13 @@ def get_interpolation_parameters(table_size: int, variable: str = 'x'):
     n = int(n)
 
     return v, n
+
+
+def get_table_size():
+    t_s = st.text_input(label="Введите число значений в таблице")
+    if not t_s:
+        st.stop()
+    if not represents_int(t_s):
+        st.warning("Неправильный формат числа")
+        st.stop()
+    return int(t_s)

@@ -4,7 +4,7 @@ from launcher import FunctionInterpolation, create_table
 import pandas as pd
 import matplotlib.pyplot as plt
 import sympy
-from layout import get_region, get_interpolation_parameters, represents_int
+from layout import get_region, get_interpolation_parameters, get_table_size
 import streamlit as st
 
 variant = 9
@@ -21,12 +21,8 @@ a, b = get_region()
 
 st.write(f'Границы интерполирования: [{a}, {b}]')
 
-t_s = st.text_input(label="Введите число значений в таблице")
-if not t_s:
-    st.stop()
-if not represents_int(t_s):
-    st.warning("Неправильный формат числа")
-    st.stop()
+t_s = get_table_size()
+
 interpolator = FunctionInterpolation(*create_table(int(t_s), (a, b), function))
 
 st.write("Исходная таблица значений функции")
