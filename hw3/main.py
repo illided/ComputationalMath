@@ -53,7 +53,7 @@ def task_3_1():
 
 
 def task3_2():
-    function = 'exp(7*x)'
+    function = 'exp(7.5*x)'
     function_se = sympy.parse_expr(function)
     fd_se = sympy.diff(function_se, "x")
     sd_se = sympy.diff(function_se, ("x", 2))
