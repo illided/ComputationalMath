@@ -14,12 +14,15 @@ def task_3_1():
     function = 'exp(x) + sin(x)'
     function_as_lambda = sympy.lambdify('x', sympy.parse_expr(function))
 
+    st.write(f"Используемая функция: {function}")
+
     a, b = get_region()
     t_s = get_table_size()
-    y, n = get_interpolation_parameters(t_s, variable='y')
 
     X_t, Y_t = create_table(t_s, (a, b), function)
     st.write(pd.DataFrame([X_t, Y_t], index=['x', 'f(x)']))
+
+    y, n = get_interpolation_parameters(t_s, variable='y')
 
     X = np.linspace(a, b)
     Y_target = np.full_like(X, y)
@@ -41,6 +44,7 @@ def task_3_1():
     sr_pred = [sr.interpolate(y, n)(y)]
 
     plot_prediction(sr_pred, col1)
+    col1.write(f"Ответ: {sr_pred[0]}")
     col1.write(f'Ошибка: {abs(function_as_lambda(sr_pred[0]) - y)}')
 
     rs = RootSearchReverseInterpolation(X_t, Y_t)
@@ -48,6 +52,7 @@ def task_3_1():
 
     plot_prediction(rs_pred, col2)
     errors = [abs(function_as_lambda(pr) - y) for pr in rs_pred]
+    col2.write(f"Ответ {rs_pred}")
     col2.write(f'Ошибки: {errors}')
     col2.write(f'Средняя ошибка: {np.mean(np.array(errors))}')
 
@@ -76,8 +81,9 @@ def task3_2():
     predicted_fd, predicted_sd = ND.compute()
     fd_error = np.abs(first_der(X) - predicted_fd)
     sd_error = np.abs(second_der(X) - predicted_sd)
-    st.dataframe(pd.DataFrame([X, Y, predicted_fd, fd_error, predicted_sd, sd_error],
-                              index=["x", "f(x)", "f'(x)", "f'(x) error", "f''(x)", "f''(x) error"]).T)
+    frame = pd.DataFrame([X, Y, predicted_fd, fd_error, predicted_sd, sd_error],
+                              index=["x", "f(x)", "f'(x)", "f'(x) error", "f''(x)", "f''(x) error"]).T
+    st.write(frame.style.format("{:.10}"))
 
 
 def main():
