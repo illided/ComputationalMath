@@ -56,7 +56,7 @@ def get_interpolation_parameters(table_size: int, variable: str = 'x'):
         col1.warning("Неправильный формат числа с плавающей запятой")
         need_stop = True
     if not need_stop and int(n) > int(table_size) - 1:
-        st.warning("Степень многочлена должна быть меньше размера таблицы - 1")
+        st.warning(f"Степень многочлена должна быть меньше {int(table_size)}")
         need_stop = True
     if need_stop:
         st.stop()
