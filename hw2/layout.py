@@ -42,7 +42,7 @@ def get_region():
 
 def get_interpolation_parameters(table_size: int, variable: str = 'x'):
     col1, col2 = st.columns(2)
-    v = col1.text_input(label=f"Введите {variable} - точку интерполирования")
+    v = col1.text_input(label=f"Введите {variable} - параметр задачи")
     n = col2.text_input(label="Введите n - степень многочлена")
     need_stop = False
     if not n:
