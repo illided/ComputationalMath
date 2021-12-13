@@ -2,6 +2,7 @@ import scipy.integrate as integrate
 import streamlit as st
 from sympy import diff
 from sympy import lambdify, parse_expr
+import numpy as np
 
 from quadro_complex import *
 

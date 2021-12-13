@@ -7,7 +7,8 @@ class QuadroFormulas:
         'right_rect': right_rectangle,
         'middle_rect': middle_rectangle,
         'trapezoid': trapezoid,
-        'simpson': simpson
+        'simpson': simpson,
+        'three_eight': three_eight
     }
     form: Callable[[Callable[[float, float], float], float, float], float]
     function: Callable[[float], float]
