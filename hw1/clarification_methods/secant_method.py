@@ -1,5 +1,7 @@
 from abc import ABC
 
+import numpy as np
+
 from .clarification_methods import ClarificationMethod
 
 
@@ -20,7 +22,11 @@ class SecantMethod(ClarificationMethod, ABC):
         x1 = self.x1
         f = self.expr
 
-        self.current_x = x1 - ((x1 - x0) * f(x1)) / (f(x1) - f(x0))
+        new = x1 - ((x1 - x0) * f(x1)) / (f(x1) - f(x0))
 
-        self.x0 = x1
-        self.x1 = self.current_x
+        if new != np.NAN:
+            self.x0 = x1
+            self.current_x = new
+            self.x1 = self.current_x
+        else:
+            self.current_x = f(x1)
